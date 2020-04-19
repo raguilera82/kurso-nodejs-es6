@@ -5,7 +5,7 @@ const CommentRepository = {};
 CommentRepository.addComment = async (comment) => {
     try {
         const newComment = new Comment(comment);
-        return newComment.save();   
+        return await newComment.save();   
     } catch (err) {
         console.log(err);
     }
