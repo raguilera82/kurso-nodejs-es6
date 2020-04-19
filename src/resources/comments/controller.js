@@ -1,9 +1,10 @@
 import express from 'express';
+import OffensiveValidator from '../../middlewares/offensive-validator';
 import CommentsService from './service';
 
 const router = express.Router();
 
-router.put('/:id', async(req, res, next) => {
+router.put('/:id', OffensiveValidator.checkwords, async(req, res, next) => {
     try {
         const id = req.params.id;
         const comment = req.body;

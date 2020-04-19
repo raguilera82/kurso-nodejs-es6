@@ -1,4 +1,5 @@
 import express from 'express';
+import OffensiveValidator from '../../middlewares/offensive-validator';
 import PostService from './service';
 
 const router = express.Router();
@@ -77,7 +78,7 @@ router.delete('/:id', async(req, res, next) => {
     }
 });
 
-router.put('/:id/comment', async(req, res, next) => {
+router.put('/:id/comment', OffensiveValidator.checkwords, async(req, res, next) => {
     try {
         const id = req.params.id;
         const comment = req.body;
