@@ -1,10 +1,11 @@
 const CheckOffensiveValidator = {};
 
-CheckOffensiveValidator.check = (cad, offensivewords) => {
+CheckOffensiveValidator.check = (cad, offensivewords, level) => {
+    console.log('LEVEL: ' + level);
     const words = cad.toLowerCase().split(' ');
     let offensivesFound = [];
     offensivewords.map(ow => {
-        if (words.includes(ow.toLowerCase())) {
+        if (isOffensiveWordLevel(words, ow, level)) {
             offensivesFound = [...offensivesFound, ow];
         }
     })
@@ -15,4 +16,9 @@ CheckOffensiveValidator.check = (cad, offensivewords) => {
     
 }
 
+function isOffensiveWordLevel(words, ow, level) {
+    return words.includes(ow.word.toLowerCase()) && Number.parseInt(ow.level) <= Number.parseInt(level);
+}
+
 export default CheckOffensiveValidator;
+
