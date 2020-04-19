@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-machine
+    networks:
+      - mongo_net
       
   mongodb:
     image: mongo:4.2.3-bionic

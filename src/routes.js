@@ -1,5 +1,7 @@
-import hello from './hello/controller';
+import helloController from './hello/controller';
+import postController from './post/controller';
 
 export default app => {
-    app.use('/hello', hello);
+    app.use('/hello', helloController);
+    app.use('/post', postController);
 }
