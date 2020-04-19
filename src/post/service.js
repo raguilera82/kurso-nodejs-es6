@@ -13,7 +13,6 @@ PostService.getAll = async () => {
 PostService.getById = async (id) => {
     try {
         const post = await PostRepository.getById(id);
-        console.log('Post en el servicio', post);
         return post;
     } catch (err) {
         console.log(err);
@@ -40,6 +39,14 @@ PostService.deletePost = async (id) => {
     try{
         return await PostRepository.deletePost(id);
     }catch(err){
+        console.log(err);
+    }
+}
+
+PostService.addComment = async (id, comment) => {
+    try {
+        return await PostRepository.addComment(id, comment);
+    } catch (err) {
         console.log(err);
     }
 }

@@ -77,4 +77,20 @@ router.delete('/:id', async(req, res, next) => {
     }
 });
 
+router.put('/:id/comment', async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        const comment = req.body;
+        console.log('id', id);
+        console.log('comment', comment);
+        const postUpdate = await PostService.addComment(id, comment);
+        res.status(200).json(postUpdate);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err);
+    }finally {
+        next();
+    }
+});
+
 export default router;

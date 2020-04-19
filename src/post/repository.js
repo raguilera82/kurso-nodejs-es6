@@ -1,4 +1,5 @@
-import Post from "./model";
+import CommentRepository from '../comments/repository';
+import Post from './model';
 
 const PostRepository = {};
 
@@ -12,9 +13,7 @@ PostRepository.getAll = async () => {
 
 PostRepository.getById = async (id) => {
     try {
-        console.log('Busco: ' + id);
-        const post = await Post.findById(id);
-        console.log(post);
+        const post = await Post.findById(id).populate('comments');
         return post;
     } catch (err) {
         console.log(err);
@@ -39,6 +38,16 @@ PostRepository.deletePost = async (id) => {
     try {
         let postDelete = await Post.findByIdAndDelete(id);
         return postDelete;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+PostRepository.addComment = async (idPost, comment) => {
+    try {
+        const newComment = await CommentRepository.addComment(comment);
+        let postUpdate = await Post.findByIdAndUpdate(idPost, {$push: {comments: newComment}}, {new: true});
+        return postUpdate;
     } catch (err) {
         console.log(err);
     }
