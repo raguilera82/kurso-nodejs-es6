@@ -1,21 +1,13 @@
-import CommentRepository from "./repository";
+import CommentRepository from './repository';
 
 const CommentsService = {};
 
 CommentsService.updateComment = async (idComment, comment) => {
-    try {
-        return await CommentRepository.updateComment(idComment, comment);
-    } catch (err) {
-        console.log(err);
-    }
+    return await CommentRepository.updateComment(idComment, comment);
 };
 
 CommentsService.deleteComment = async (idComment) => {
-    try {
-        return await CommentRepository.deleteComment(idComment);
-    } catch (err) {
-        console.log(err);
-    }
+    return await CommentRepository.deleteComment(idComment);
 };
 
 export default CommentsService;

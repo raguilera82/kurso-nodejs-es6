@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
-import OffensiveWordRepository from "../resources/offensivewords/repository";
-import CheckOffensiveValidator from "../validators/check-offensive";
+import OffensiveWordRepository from '../resources/offensivewords/repository';
+import CheckOffensiveValidator from '../validators/check-offensive';
 
 const settings = config();
 

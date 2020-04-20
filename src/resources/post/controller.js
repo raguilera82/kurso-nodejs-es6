@@ -53,8 +53,7 @@ router.put('/:id', async (req, res, next) => {
             res.status(404).json({message: 'Recurso no encontrado'})
         }
     } catch (err) {
-        console.log(err);
-        res.status(500).send(err);
+        next(err);
     }finally {
         next();
     }
@@ -71,8 +70,7 @@ router.delete('/:id', async(req, res, next) => {
         }
         
     } catch (err) {
-        console.log(err);
-        res.status(500).send(err);
+        next(err);
     }finally {
         next();
     }
@@ -87,8 +85,7 @@ router.put('/:id/comment', OffensiveValidator.checkwords, async(req, res, next) 
         const postUpdate = await PostService.addComment(id, comment);
         res.status(200).json(postUpdate);
     } catch (err) {
-        console.log(err);
-        res.status(500).send(err);
+        next(err);
     }finally {
         next();
     }

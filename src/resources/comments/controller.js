@@ -15,8 +15,7 @@ router.put('/:id', OffensiveValidator.checkwords, async(req, res, next) => {
             res.status(404).json({message: 'Recurso no encontrado'})
         }
     } catch (err) {
-        console.log(err);
-        res.status(500).send(err);
+        next(err);
     }finally {
         next();
     }
@@ -31,9 +30,8 @@ router.delete('/:id', async(req, res, next) => {
         }else{
             res.status(404).json({message: 'Recurso no encontrado'})
         }
-    } catch (error) {
-        console.log(err);
-        res.status(500).send(err);
+    } catch (err) {
+        next(err);
     }finally {
         next();
     }

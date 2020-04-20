@@ -1,4 +1,4 @@
-import CheckOffensiveValidator from "./check-offensive";
+import CheckOffensiveValidator from './check-offensive';
 
 describe('Check offensive word', () => {
 
@@ -27,6 +27,17 @@ describe('Check offensive word', () => {
     it('should say no offensive word no exits', () => {
         const content = 'Hola mundo';
         const offensiveWords = [];
+
+        const ofensiveFounds = CheckOffensiveValidator.check(content, offensiveWords, 2);
+
+        expect(ofensiveFounds.length).toEqual(0);
+    })
+
+    it('should say no offensive word no exits', () => {
+        const content = 'Hola mundo pipiolo';
+        const offensiveWords = [
+            {word: 'Pipi', level: 1}
+        ];
 
         const ofensiveFounds = CheckOffensiveValidator.check(content, offensiveWords, 2);
 

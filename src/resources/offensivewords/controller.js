@@ -8,8 +8,7 @@ router.get('/', async (req, res, next) => {
         const result = await OffensiveWordService.getAll();
         res.status(200).json(result);
     } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+        next(err);
     }finally {
         next();
     }
@@ -21,8 +20,7 @@ router.post('/', async(req, res, next) => {
         const result = await OffensiveWordService.add(offensiveword);
         res.status(201).json(result);   
     } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+        next(err);
     }finally {
         next();
     }
@@ -39,8 +37,7 @@ router.put('/:id', async(req, res, next) => {
             res.status(404).json({message: 'Recurso no encontrado'});
         }
     } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+        next(err);
     }finally {
         next();
     }
@@ -56,8 +53,7 @@ router.delete('/:id', async(req, res, next) => {
             res.status(404).json({message: 'Recurso no encontrado'});
         }
     } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+        next(err);
     }finally {
         next();
     }
