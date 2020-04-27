@@ -1,5 +1,7 @@
 import express from 'express';
+import passport from 'passport';
 import OffensiveValidator from '../../middlewares/offensive-validator';
+import enumRoles from '../users/enum.roles';
 import PostService from './service';
 
 const router = express.Router();
@@ -30,8 +32,10 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
     try {
+        const post = req.body;
+        post.idAuthor = req.user._id;
         const newPost = await PostService.addPost(req.body);
         res.status(201).send(newPost);
     }catch(err) {
@@ -42,15 +46,23 @@ router.post('/', async (req, res, next) => {
     }
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
     try {
+
+        const user = req.user;
         const id = req.params.id;
-        const post = req.body;
-        const result = await PostService.updatePost(id, post);
-        if (result !== null) {
-            res.status(200).json(result);
+        const postUpdate = req.body;
+        const post = await PostService.getById(id);
+        if (post !== null) {
+            if (post.idAuthor === user._id.toString()  || user.role === enumRoles.ROLES.ADMIN) {
+                const result = await PostService.updatePost(id, postUpdate);
+                console.log('Update result', result);
+                res.status(200).json(result);
+            }else{
+                res.status(401).json({message: 'Este post no es tuyo'});
+            }
         }else{
-            res.status(404).json({message: 'Recurso no encontrado'})
+            res.status(404).json({message: 'Post no encontrado'});
         }
     } catch (err) {
         next(err);
@@ -59,16 +71,21 @@ router.put('/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/:id', async(req, res, next) => {
+router.delete('/:id', passport.authenticate('jwt', {session: false}), async(req, res, next) => {
     try {
+        const user = req.user;
         const id = req.params.id;
-        const result = await PostService.deletePost(id);
-        if (result !== null) {
-            res.status(200).json(result);
+        const post = await PostService.getById(id);
+        if (post !== null) {
+            if (post.idAuthor === user._id.toString() || user.role === enumRoles.ROLES.ADMIN) {
+                const result = await PostService.deletePost(id);
+                res.status(200).json(result);
+            }else{
+                res.status(401).json({message: 'Este post no es tuyo'});
+            }
         }else{
-            res.status(404).json({message: 'Recurso no encontrado'})
+            res.status(404).json({message: 'Post no encontrado'});
         }
-        
     } catch (err) {
         next(err);
     }finally {

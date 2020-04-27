@@ -9,7 +9,8 @@ const PostSchema = new Schema({
     comments: [{
         type: Schema.Types.ObjectId,
         ref: 'comments'
-    }]
+    }],
+    idAuthor: {type: 'String'}
 }, {collection: 'posts'})
 
 export default mongoose.model('post', PostSchema);

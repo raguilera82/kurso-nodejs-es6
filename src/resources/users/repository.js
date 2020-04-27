@@ -8,7 +8,7 @@ UsersRepository.getAllAdmins = async () => {
 }
 
 UsersRepository.getByUsername = async (username) => {
-    const user = await User.find({username});
+    const user = await User.findOne({username});
     return user;
 }
 
