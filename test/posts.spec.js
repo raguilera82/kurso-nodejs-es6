@@ -115,9 +115,11 @@ describe('Post Enpoint', () => {
 
         //Delete a post P1 with P2
         console.log('Post Id: ' + addPost.body._id);
-        await server.delete('/posts/' + addPost.body._id)
+        const resDelete = await server.delete('/posts/' + addPost.body._id)
         .set('authorization', 'Bearer ' + tokenP2)
         .expect(401);
+
+        console.log('resDelete',resDelete.body.message);
 
         await server.delete('/posts/' + addPost.body._id)
         .set('authorization', 'Bearer ' + tokenP1)
