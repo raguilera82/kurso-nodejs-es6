@@ -1,4 +1,5 @@
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import { config } from 'dotenv';
 import passport from 'passport';
 import { BasicStrategy } from 'passport-http';
@@ -8,6 +9,8 @@ import UsersRepository from './resources/users/repository';
 const settings = config();
 
 export default app => {
+
+    app.use(cors());
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
